@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(
+    1deg,
+    rgba(49, 191, 243) 0%,
+    rgba(244, 136, 154) 100%
+  );
+}
+.todo-app {
+  display: flex;
+  flex-direction: column;
+  flex: start;
+  width: 720px;
+  min-height: 600px;
+  background: rgba(35, 128, 161, 0.233);
+  text-align: center;
+  margin: 75px auto;
+  border-radius: 10px;
+  padding-bottom: 32px;
+}
+
+.todo-header {
+  margin: 32px 0;
+  color: rgb(255, 255, 255);
+  font-size: 24px;
+}
+
+.complete {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+
+.todo-form {
+  margin-bottom: 24px;
+}
+
+.todo-input {
+  padding: 14px 32px 14px 16px;
+  border-radius: 4px 0 0 4px;
+  border: 2px solid rgb(244, 136, 154);
+  outline: none;
+  outline: none;
+  width: 320px;
+  background: transparent;
+  color: #fff;
+}
+
+.todo-input::placeholder {
+  color: #e2e2e236;
+}
+
+.todo-button {
+  padding: 12px 15px 15px ;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background: rgb(244, 136, 154);
+  color: black;
+  font-size: large;
+  text-transform: capitalize;
+}
+
+.todo-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.todo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px auto;
+  color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.todo-row .todo-date{
+  margin-bottom: -1.5em;
+  padding: 1em;
+  font-size:x-small;
+}
+.todo-row .todo-text{
+  width: 75%;
+}
+
+
+.todo-row:nth-child(2n + 1) {
+  background: rgb(244, 136, 154)
+}
+
+.todo-row:nth-child(2n + 2) {
+  background: rgb(49, 191, 243)
+}
+
+
+
+.icons {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.delete-icon {
+  margin-right: 5px;
+  color: rgb(0, 0, 0);
+}
+
+.edit-icon {
+  color: rgb(0, 0, 0);
+}
+
+.add-icon {
+  margin-bottom: -19px;
+  padding: 15px;
+  height: 48px;
+  width: 50px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background: rgb(244, 136, 154);
+  color: black;
+}
+
+.update-icon {
+  margin-bottom: -19px;
+  padding: 15px;
+  height: 48px;
+  width: 50px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background: rgb(244, 136, 154);
+  color: black;
+}
