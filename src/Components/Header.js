@@ -1,7 +1,6 @@
 import React from 'react'
-import favicon from '../Assets/1560.svg'
 
-const Header = ({header}) => {
+const Header = () => {
     return (
         
         <header>

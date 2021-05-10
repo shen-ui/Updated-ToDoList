@@ -6,53 +6,56 @@ import Axios from 'axios';
 function TodoForm(props) {
     const [input, setInput] = useState(props.edit ? props.edit.value : '');
 
-    //
     const inputRef = useRef(null);
 
-    // allows targeting of the text input field
+    // Allows targeting of the text input field
     useEffect(() => {
         inputRef.current.focus();
     });
 
-    // allows the change of input state in the input field.
+    // Allows the change of input state in the input field.
     const handleChange = e => {
-        setInput(e.target.value);
+        setInput(e.target.value); 
     };
 
-    // contructs a date and time as a string and returns it as const date.
-    const newDate = () => {
-        var d = new Date();
-        // getMonth is indexed at 0
-        const date =  d.getMonth() + 1 + "/"
-                    + d.getDate() + "/"
-                    + d.getFullYear() + " @"
-                    + d.getHours() + ":" 
-                    + d.getMinutes() + ":" 
-                    + d.getSeconds()
-        return date;
-    }
-    // submits submissions to sql server
-    const submitTodos = (input, date) => {
-        //Axios.post(address)
-        Axios.post('http://localhost:3001/', {text: input, date: date, complete: false});
+    
+    const assignDate = () => {
+        // returns a Date object. I think SQL
+        var d = new Date().toJSON().slice(0, 19).replace('T', ' ')
+        return d;
     };
 
-    // generate todo items here
+    // Submits submissions to sql server
+    const submitTodos = (id, input, date) => {
+        Axios.post('http://localhost:3333/api/insert', {
+            id: id, 
+            text: input, 
+            date: date, 
+            complete: false
+        }).then(() => {
+            alert('Post Successful');
+        });
+    };
+        
+    // Generate todo items here
     // id: numerical identifier for every todo in state
     // text: the text for each todo
     // date: calls newDate() and generates the date and time for every todo
-    //       (NOTE: also updates date upon handleChange.)
+    // will change classname when complete is true
+    // (NOTE: also updates date upon handleChange.)
     const handleSubmit = e => {
         e.preventDefault();
         const local_id = Math.floor(Math.random() * 10000);
-        const local_date = newDate();
-        submitTodos(local_id, input, local_date);
+        const local_date = assignDate();
         props.onSubmit({
         // will need to find a better way of swapping id when updating a todo
         id: local_id,
         text: input,
-        date: local_date
+        date: local_date,
+        complete: false
         });
+
+        submitTodos(local_id, input, local_date, 0)
         //reset input to '' upon enter
         setInput('');
     };
@@ -74,7 +77,6 @@ function TodoForm(props) {
                 onClick={handleSubmit} 
                 className='update-icon'>
             </GrCheckmark>
-            
             </>
         ) : (
             <>
@@ -97,4 +99,3 @@ function TodoForm(props) {
 }
 
 export default TodoForm;
-

@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Intoduction
+This is an updated version of a previous react todo list application with a backend of a persistant MySQL database. Currently working on functionality over form. Overall component developement has been fine.
+Data is currently saved in a 'data.json' file in the main directory.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Menu
 
-## Available Scripts
+1. Need to hook up the front end to the backend (Shouldn't be much more considering the hard part of making a backend is done.)
+2. Fix the logic of previous bugs
+3. Migrate the database to an Amazon RDS server for persistance online.
 
-In the project directory, you can run:
+## Bugs
 
-### `npm start`
+1. The 'id' for every todo in the todos state is does not order correctly and needs to be redesigned.
+2. Upon updating a todo, the date is updated but the 'id' is not pushed to the front of the todo list.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Overall, many of the front end problems relate to mismanagement of this specific problem and needs to be
+redesigned. Will be ironed our with further developement.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# How to run start front end
+NOTE:
+I have split the project to a 'backend' and 'master' branch
+Master is the front end developed in React
+Backend is a node.js with MySQL
+See Backend before setting up the front.
 
-### `npm test`
+1. Node.js, a IDE (I prefer VSCode) and MySQL Workbench
+https://nodejs.org/en/download/
+https://dev.mysql.com/downloads/workbench/
+https://code.visualstudio.com/download
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Enter the a console and go into the directory for the client side and run:
+'npm install'
+'npm start'
 
-### `npm run build`
+3. Use the App!
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Git Steps
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. 'git init'
+2. 'git remote add https://github.com/shen-ui/Updated-ToDoList.git master
+2. 'git add .'
+3. 'git commit -m 'enter message'
+4. 'git push'
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Gh-pages Steps
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. npm i gh-pages
+2. 'edit package.json'
+3. add'"homepage": "gh-pages URL Here", ...'
+    to the top of the package.json before "name": "name here"...
+4. scripts {...
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+    }
+5. npm run deploy 
