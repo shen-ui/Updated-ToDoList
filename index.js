@@ -17,9 +17,9 @@ const app = express()
 const mysql = require('mysql');
 const cors = require('cors');
 
-const corsOptions ={
+const corsOptions = {
     origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
+    credentials:true, //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
 
@@ -34,12 +34,14 @@ const db = mysql.createConnection({
 app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
 app.get('/api/get', (req, res) =>{
     const sqlSelect = "SELECT * FROM data"
     db.query(sqlSelect, (err, result) => {
-        console.log(result);
+        res.send(result);
     })
 })
+
 app.post("/api/insert", (req, res) => {
     const id = req.body.id;
     const text = req.body.text;
@@ -55,19 +57,6 @@ app.post("/api/insert", (req, res) => {
             console.log(res);
         }
     })
-});
-
-app.post("/api/get", (req, res) => {
-    const sqlSelect =
-    "SELECT * FROM todolist.data";
-    db.query(sqlInsert, [text, date, complete], (err,result) => {
-        if (err){
-            console.log(err)
-        }
-        else{
-        console.log(result);
-        }
-    });
 });
 
 app.listen(3333, () => {
