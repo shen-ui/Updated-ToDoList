@@ -20,6 +20,7 @@ const app = express()
 const mysql = require('mysql');
 const cors = require('cors');
 
+
 const corsOptions = {
     origin:'http://localhost:3000', 
     credentials:true, //access-control-allow-credentials:true
@@ -49,7 +50,6 @@ app.get('/api/get', (req, res) => {
 
 app.delete('/api/delete/:id', (req, res) => {
     const id = req.params.id;
-    //console.log(id);
     const sqlDelete = 
         "DELETE FROM data WHERE id = ?";
     db.query(sqlDelete, id, (err, result) => {
@@ -63,7 +63,6 @@ app.delete('/api/delete/:id', (req, res) => {
 });
 
 app.post("/api/insert", (req, res) => {
-    console.log(req.body);
     const id = req.body.id
     const text = req.body.text
     const date = req.body.date
@@ -79,6 +78,21 @@ app.post("/api/insert", (req, res) => {
         }
     })
 });
+
+app.put("/api/complete", (req, res) => {
+    const id = req.body.id
+    const complete = req.body.complete;
+    
+    const sqlPut = "UPDATE data SET complete = ? WHERE id = ?";
+    db.query(sqlPut, [complete, id], (err, res) => {
+        if(err){
+            console.log("complete error: " + err)
+        }
+        else{
+            console.log(res);
+        }
+    })
+})
 
 app.listen(3333, () => {
     console.log('running on port 3333')
