@@ -8,6 +8,9 @@
  * 
  * app.get() => runs code on going into the given directory
  * app.post() => runs code upon a api post requested on the front end with a given directory
+ * app.delete() => handles delete request. Does NOT handle requests with body-parser. 
+ *                 data must be taken as a parameter.
+ * 
  * app.listen() => backend is accessable from the front end with a local host port.
  * 
  */
