@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
+
 // Imported Components
 import TodoForm from './ToDoForm';
 
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
   const [edit, setEdit] = useState({
-    id: null,
+    id: '',
     text: '',
     date: ''
   });
-
+  
   const submitUpdate = input => {
     // update edit state
     updateTodo(edit.id, input);
     // after update reset state to empty
     setEdit({
-      id: null,
+      id: '',
       text: '',
       date: ''
     });
   };
 
   if (edit.id) {
-    return <TodoForm edit={edit} onSubmit={submitUpdate} />;
+    return <TodoForm edit={edit} onSubmit={submitUpdate} />
   }
 
   return todos.map((todo, index) => (
@@ -32,17 +33,14 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
       className={todo.complete ? 'todo-row complete' : 'todo-row'}
       key={index}
     >
-        <div className='todo-index'>
-            {todo.id}
-        </div>
-        
         <div className="todo-text" key={todo.id} onClick={() => completeTodo(todo.id)}>
             {todo.text}
             <p className="todo-date">
-              {todo.date}
+              {console.log(todo.date + todo.text)}
+              {todo.date.slice(5,7) + "/" + todo.date.slice(8,10) + "/" + todo.date.slice(0,4)+ 
+              " - " + todo.date.slice(11,13) + ":" + todo.date.slice(14,16) + ":" + todo.date.slice(17,19) }
             </p>
         </div>
-        
 
         <div className='icons'>
         <RiCloseCircleLine
@@ -54,7 +52,6 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
           className='edit-icon'
         />
         </div>
-      
     </div>
   ));
 };
