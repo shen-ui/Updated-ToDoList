@@ -47,7 +47,7 @@ app.get('/api/get', (req, res) => {
         res.send(result)
     })
 });
-
+// need to restructure on deletion
 app.delete('/api/delete/:id', (req, res) => {
     const id = req.params.id;
     const sqlDelete = 
@@ -59,6 +59,10 @@ app.delete('/api/delete/:id', (req, res) => {
         else{
             console.log("row deleted: " + id)
         }
+    })
+    const sqlShift = "UPDATE data SET id=id-1 WHERE id > ?"
+    db.query(sqlShift,id, (req, res) => {
+        console.log(res);
     })
 });
 
@@ -84,7 +88,7 @@ app.put("/api/update", (req, res) => {
     const text = req.body.text;
     const date = req.body.date;
     console.log(req.body);
-    const sqlUpdateText = "UPDATE data SET text = ?, date = ? WHERE id = ?";
+    const sqlUpdateText = "UPDATE data SET text = ?, date = ?, complete=false WHERE id = ?";
     db.query(sqlUpdateText, [text, date, id], (err,res) => {
         if(err){
             throw(err)
