@@ -79,6 +79,22 @@ app.post("/api/insert", (req, res) => {
     })
 });
 
+app.put("/api/update", (req, res) => {
+    const id = req.body.id;
+    const text = req.body.text;
+    const date = req.body.date;
+    console.log(req.body);
+    const sqlUpdateText = "UPDATE data SET text = ?, date = ? WHERE id = ?";
+    db.query(sqlUpdateText, [text, date, id], (err,res) => {
+        if(err){
+            throw(err)
+        }
+        else{
+            console.log(res)
+        }
+    })
+});
+
 app.put("/api/complete", (req, res) => {
     const id = req.body.id
     const complete = req.body.complete;
