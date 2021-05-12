@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 //import data from '../data.json'
 // Imported Components
 import Header from './Header'
@@ -14,13 +14,9 @@ function TodoList() {
         Axios.get('http://localhost:3333/api/get').then((response) => {
             //console.log(response.data);
             setTodos(response.data);
-            response.data.map((todo) => {
-                console.log(todo.date);
-            })
+
         });;
     }, []);
-
-    const todoRef = useRef()
 
     const submitTodos = (id, input, date) => {
         Axios.post('http://localhost:3333/api/insert', {
