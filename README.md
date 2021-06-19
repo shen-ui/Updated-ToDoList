@@ -34,9 +34,10 @@ NOTE: I'm ommitting all problems with Security Groups because they're miniscule 
 2. Looked at options for me to host the DB (i.g. Heroku, AmazonAWS).
 3. Decided on AmazonRDS and EC2. Created a RDS instance, control via MySQL Workbench, import data.json and RDS was established.
 4. Created EC2 Instance (and get completely confused by Security groups and... what? How do I SSH into this? What is EC2 EVEN FOR???)
-5. Spend an entire day figuring out how EC2 relates to RDS. Realize this is where I should be putting my node.js code in my EC2 instance much like how I had client with React and server with Node.
-(once you SSH via gitbash, run these commands to set up nvm and node.js.)
+5. Spend an entire day figuring out how EC2 relates to RDS. Realize this is where I should be putting my node.js code in my EC2 instance much like how I had client with React and server with Node. **ignore my tangent, log into your EC2 with bash. Commands below:**
 
+`chmod 400 ~/.ssh/your-key-name.pem`
+gives reading ownership of the key to the user
 `$ ssh -i ~/directory-to-sshkey/whatever-your-key-name-is.pem user@ec2-xx-xxx-xx-xx.eu-west-1.compute.amazonaws.com` <br />
 SSH into EC2 via a key.pem.<br />
 `$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh` <br />
@@ -69,12 +70,12 @@ starts the server! it should be working now on whatever port you set up in your 
 3. Here's the fun part! Lets install nginx, pm2 and get all the certificates!
 
 #### Notes on why you should NOT follow NGINX documentation:
- On nginx's documentation, they recommend you put configurations into /etc/nginx/conf.d
+ On nginx's documentation, they recommend you put configurations into `/etc/nginx/conf.d`.
  All configurations in conf.d are global so it does make sense to put some configurations there, but otherwise,
- it's much more convienent to put all vhost configurations into /etc/nginx/sites-available/ regardless if they are disabled or not.
- The abstraction of sites-* is better organized and has better modulation. You can enable, disable and store different vhost with this directory, 
+ it's much more convienent to put all vhost configurations into `/etc/nginx/sites-available/` regardless if they are disabled or not.
+ **The abstraction of sites-* is better organized and has better modulation.** You can enable, disable and store different vhost with this directory, 
  so I recommend you don't follow documentation for this reason.
- Once you set up your configuration, you need set a symbolic link to /etc/nginx/sites-enabled/ from /etc/nginx/sites-available.
+ Once you set up your configuration, you need set a symbolic link to `/etc/nginx/sites-enabled/` from `/etc/nginx/sites-available.`
  
 `$ apt-get update` <br />
 always a good idea to keep your packages updated.<br />
