@@ -37,29 +37,29 @@ NOTE: I'm ommitting all problems with Security Groups because they're miniscule 
 5. Spend an entire day figuring out how EC2 relates to RDS. Realize this is where I should be putting my node.js code in my EC2 instance much like how I had client with React and server with Node.
 (once you SSH via gitbash, run these commands to set up nvm and node.js.)
 
-`$ ssh -i ~/directory-to-sshkey/whatever-your-key-name-is.pem user@ec2-xx-xxx-xx-xx.eu-west-1.compute.amazonaws.com` 
-SSH into EC2 via a key.pem.
-`$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh` 
-installs NVM to EC2.
-`$ source ~/.bashrc` 
-if you don't want to log in and out after nvm is installed, this changes directory to the VPC.
-`$ nvm install 13` 
-Now that NVM is installed, you can download node v13.
-`$ mkdir server` 
-create a new directory called server.
-`$ npm init`
-creates a package.json which will track your dependencies.
+`$ ssh -i ~/directory-to-sshkey/whatever-your-key-name-is.pem user@ec2-xx-xxx-xx-xx.eu-west-1.compute.amazonaws.com` <br />
+SSH into EC2 via a key.pem.<br />
+`$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh` <br />
+installs NVM to EC2.<br />
+`$ source ~/.bashrc` <br />
+if you don't want to log in and out after nvm is installed, this changes directory to the VPC.<br />
+`$ nvm install 13` <br />
+Now that NVM is installed, you can download node v13.<br />
+`$ mkdir server` <br />
+create a new directory called server.<br />
+`$ npm init`<br />
+creates a package.json which will track your dependencies.<br />
 
-`$ npm -i "package-name"` 
-Installs all your packages. I referenced my package.json from my local copy.
-This project used cors, dontenv, express, mysql, nodemon
-`$ nano index.js`
-creates the index.js file. I pulled the data from github, but if it's not already pushed on git, you can use nano to quickly copy and paste the code from a local copy.
-`$ node index.js` 
-starts the server! it should be working now on whatever port you set up in your code.
+`$ npm -i "package-name"` <br />
+Installs all your packages. I referenced my package.json from my local copy.<br />
+This project used cors, dontenv, express, mysql, nodemon<br />
+`$ nano index.js`<br />
+creates the index.js file. I pulled the data from github, but if it's not already pushed on git, you can use nano to quickly copy and paste the code from a local copy.<br />
+`$ node index.js` <br />
+starts the server! it should be working now on whatever port you set up in your code.<br />
 
-6. go to your EC2 instance and type the address with your listener into your address bar. `(i.g. 12.2.3.4.6:4330)`
-7. Set up ELB for EC2 (public IPv4 for the EC2 instance changes every reboot. It's convinent to set up ELB for that reason.)
+6. go to your EC2 instance and type the address with your listener into your address bar. `(i.g. 12.2.3.4.6:4330)`<br />
+7. Set up ELB for EC2 (public IPv4 for the EC2 instance changes every reboot. It's convinent to set up ELB for that reason.)<br />
 8. set up all endpoints with the front end and have everything work on your locally hosted front end but then have everything fall apart when you try to connect the EC2 to gh-pages because not only did you not have a reverse-proxy manager, you also don't have certificates for HTTPS OR a domain... How do I even set that up? Why do I even need them?
 
 ### Episode 3: " Okay... Well this is the final mile... I'll get this done Tommorrow."
@@ -76,17 +76,17 @@ starts the server! it should be working now on whatever port you set up in your 
  so I recommend you don't follow documentation for this reason.
  Once you set up your configuration, you need set a symbolic link to /etc/nginx/sites-enabled/ from /etc/nginx/sites-available.
  
-`$ apt-get update` 
-always a good idea to keep your packages updated.
-`$ sudo apt-get install certbot` 
-install certbot (Makes certificate management easier).
-`$ apt-get install python3-certbot-nginx` 
-install certbot package for nginx
+`$ apt-get update` <br />
+always a good idea to keep your packages updated.<br />
+`$ sudo apt-get install certbot`<br />
+install certbot (Makes certificate management easier).<br />
+`$ apt-get install python3-certbot-nginx`<br />
+install certbot package for nginx<br />
 
-`$ sudo rm /etc/nginx/sites-enabled/default` 
-remove the default configurator for nginx.
-`$ sudo nano /etc/nginx/sites-available/name_of_your_config_file` 
-create your configuration. I put an example one, but certbot will automatically configure this for you. I do recommend you double-check with
+`$ sudo rm /etc/nginx/sites-enabled/default` <br />
+remove the default configurator for nginx.<br />
+`$ sudo nano /etc/nginx/sites-available/name_of_your_config_file` <br />
+create your configuration. I put an example one, but certbot will automatically configure this for you. I do recommend you double-check with:<br />
 
 
 ```
@@ -97,14 +97,14 @@ server {
     server_name example.com www.example.com;
 }
 ```
-`sudo certbot --nginx -d yoursite.com -d www.yoursite.com`
-generate certificates with Nginx plug-in.
-Note: Let's Encrypt certificates expire after 90 days.
+`sudo certbot --nginx -d yoursite.com -d www.yoursite.com`<br />
+generate certificates with Nginx plug-in.<br />
+Note: Let's Encrypt certificates expire after 90 days.<br />
 
-4. respond to the prompts from certbot.
-5. Check on your configuration to make sure certbot has changed your configuration.
-`$ cat /etc/nginx/sites-available/name_of_your_config_file`
-if certbot doesn't configure it correctly, here's an example of how it should have generated:
+4. respond to the prompts from certbot.<br />
+5. Check on your configuration to make sure certbot has changed your configuration.<br />
+`$ cat /etc/nginx/sites-available/name_of_your_config_file`<br />
+if certbot doesn't configure it correctly, here's an example of how it should have generated:<br />
 ```
 server {
     listen 80 default_server;
@@ -130,11 +130,11 @@ And your done! I recommend testing on your domain to see if your API is running 
 If something is missconfigured, I recommend you check out the nginx documentation.
 https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/#auto-renewal
 
-6. Set up PM2. PM2 will keep the node backend running even when you exit your EC2 instance.
-`npm install pm2`
-installs pm2
-`pm2 start index.js`
-run and maintains your node program.
+6. Set up PM2. PM2 will keep the node backend running even when you exit your EC2 instance.<br />
+`npm install pm2`<br />
+installs pm2<br />
+`pm2 start index.js`<br />
+run and maintains your node program.<br />
 
 7. Spend some time connecting your client, server so they connect to your domain.
 
