@@ -12,14 +12,14 @@ function TodoList() {
 
     useEffect(() => {
         Axios.get(
-            'http://ec2-3-143-116-194.us-east-2.compute.amazonaws.com/api/get'
+            'https://www.shenslist.xyz/api/get'
         )
         .then(res => {setTodos(res.data);})
     }, []);
 
     const submitTodos = (id, input, date) => {
         Axios.post(
-            'http://ec2-3-143-116-194.us-east-2.compute.amazonaws.com/api/insert', {
+            'https://www.shenslist.xyz/api/insert', {
             id: id, 
             text: input, 
             date: date,
@@ -40,7 +40,7 @@ function TodoList() {
 
     const changeTodo = (todoId, edittedTodo) => {
         Axios.put(
-            "http://ec2-3-143-116-194.us-east-2.compute.amazonaws.com/api/update", {
+            "https://www.shenslist.xyz/api/update", {
             id: todoId,
             text: edittedTodo.text, 
             date: edittedTodo.date,
@@ -62,7 +62,7 @@ function TodoList() {
 
     const deleteTodo = tbd => {
         console.log(tbd)
-        Axios.delete(`http://ec2-3-143-116-194.us-east-2.compute.amazonaws.com/api/delete/${tbd}`);
+        Axios.delete(`https://www.shenslist.xyz/api/delete/${tbd}`);
     }
     const removeTodo = id => {
         const removedArr = [...todos].filter(todo => todo.id !== id);
@@ -71,7 +71,7 @@ function TodoList() {
     };
 
     const switchToDo = (id, complete) => {
-        Axios.put('http://ec2-3-143-116-194.us-east-2.compute.amazonaws.com/api/complete', {
+        Axios.put('https://www.shenslist.xyz/api/complete', {
             id: id, 
             complete: complete
         }).then(() => {

@@ -1,56 +1,141 @@
 # Intoduction
 This is an updated version of a previous react todo list application with a node.js backend.
 mySQL was used to develope the database.
-Finished on 5/11/2021.
+Database is hosted with AmazonAWS.
+Finished on 6/18/2021.
 
-## Menu
-All done!
-Will try to get the MySQL database hosted on AmazonRDS or firebase.
-May update css to improve mobile look and feel.
+## Tasks for the future
+Impove css for mobile.
+(I'm never really satisfied with this part.)
+Include pictures into process to be more concise.
 
 ## Bugs
-No Bugs!!! ( LETS GOOOOO! )
+No Bugs!!!
 
-# How to run start front end
-NOTE:
-I have split the project to a `backend` and `master` branch
-Master is the front end developed in React
-Backend is a node.js with MySQL
-See Backend before setting up the front.
+## Process (With all my mistakes)
+To start, I first want to celebrate I finally finished this project!!
+I'm incredibly satisfied with myself for this project. I know it's not a huge project, but I learned
+so much during this project (especially in the back-end). I was first intimidated by the prospect of
+having to use so many new things like AmazonRDS, EC2, ELB, NGINX, buying my own domain 
+but I was able to learn, adapt and write my own backend. I feel so much more 
+capable with my skills as a full-stack developer!
 
-1. Required Tools: 
-Node.js
-https://nodejs.org/en/download/
-IDE (I prefer VSCode)
-https://dev.mysql.com/downloads/workbench/
-MySQL Workbench 8.0 CE
-https://code.visualstudio.com/download
-gitBash
-https://git-scm.com/downloads
+### Episode 1: "Oh this will be an easy project!"
+#### Objective: Make a client/server side todo List as a project.
+NOTE: I'm ommitting all problems with Security Groups because they're miniscule problems in hindsight.
+1. First develope the client side with react.js (with a temperary back-end via a json file).
+2. Develope, connect and test a server locally hosted with node.js.
+3. Import data into a Local MySQL database with MySQL Workbench and connect all endpoints so the client and server could communicate with the DB.
+4. Push and deploy code to github and set up gh-pages.
 
-2. Go to the directory in your IDE and open a new console (or use gitbash) and type these commands:
-`npm install`
-`npm start`
-the front end is now operational
+### Episode 2: "Well.. I want this to work with github pages... I'm sure it won't be hard."
+#### Objective: Create a VPC with AmazonAWS for persistance on the client side.
+1. Deployed the front end to github pages
+2. Looked at options for me to host the DB (i.g. Heroku, AmazonAWS).
+3. Decided on AmazonRDS and EC2. Created a RDS instance, control via MySQL Workbench, import data.json and RDS was established.
+4. Created EC2 Instance (and get completely confused by Security groups and... what? How do I SSH into this? What is EC2 EVEN FOR???)
+5. Spend an entire day figuring out how EC2 relates to RDS. Realize this is where I should be putting my node.js code in my EC2 instance much like how I had client with React and server with Node.
+(once you SSH via gitbash, run these commands to set up nvm and node.js.)
 
-3. See backend branch for details on the backend! 
+`$ ssh -i ~/directory-to-sshkey/whatever-your-key-name-is.pem user@ec2-xx-xxx-xx-xx.eu-west-1.compute.amazonaws.com` 
+SSH into EC2 via a key.pem.
+`$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh` 
+installs NVM to EC2.
+`$ source ~/.bashrc` 
+if you don't want to log in and out after nvm is installed, this changes directory to the VPC.
+`$ nvm install 13` 
+Now that NVM is installed, you can download node v13.
+`$ mkdir server` 
+create a new directory called server.
+`$ npm init`
+creates a package.json which will track your dependencies.
 
-## Git Steps
-1. `git init`
-2. `git remote add https://github.com/shen-ui/Updated-ToDoList.git master
-2. `git add .`
-3. `git commit -m `enter message`
-4. `git push`
+`$ npm -i "package-name"` 
+Installs all your packages. I referenced my package.json from my local copy.
+This project used cors, dontenv, express, mysql, nodemon
+`$ nano index.js`
+creates the index.js file. I pulled the data from github, but if it's not already pushed on git, you can use nano to quickly copy and paste the code from a local copy.
+`$ node index.js` 
+starts the server! it should be working now on whatever port you set up in your code.
 
-## Gh-pages Steps
-1. npm i gh-pages
-2. `edit package.json`
-3. add`"homepage": "gh-pages URL Here", ...`
-    to the top of the package.json before `"name": "name here"...`
-4. include deployment script into the package.json for gh-pages.
-```scripts {...
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-    }
-    ```
-5. `npm run deploy`
+6. go to your EC2 instance and type the address with your listener into your address bar. `(i.g. 12.2.3.4.6:4330)`
+7. Set up ELB for EC2 (public IPv4 for the EC2 instance changes every reboot. It's convinent to set up ELB for that reason.)
+8. set up all endpoints with the front end and have everything work on your locally hosted front end but then have everything fall apart when you try to connect the EC2 to gh-pages because not only did you not have a reverse-proxy manager, you also don't have certificates for HTTPS OR a domain... How do I even set that up? Why do I even need them?
+
+### Episode 3: " Okay... Well this is the final mile... I'll get this done Tommorrow."
+#### Objective: Configure EC2 to route traffic over HTTPS
+1. Search for ALL your problems on stackoverflow. I can't get a certificate for EC2? I NEED to buy a domain? Okay... let me just google that.
+2. Configure domain's DNS ANAME to Public IPv4 address of EC2 Instance. (Wait 24 hours. It takes a while for domain to configure this).
+3. Here's the fun part! Lets install nginx, pm2 and get all the certificates!
+
+#### Notes on why you should NOT follow NGINX documentation:
+ On nginx's documentation, they recommend you put configurations into /etc/nginx/conf.d
+ All configurations in conf.d are global so it does make sense to put some configurations there, but otherwise,
+ it's much more convienent to put all vhost configurations into /etc/nginx/sites-available/ regardless if they are disabled or not.
+ The abstraction of sites-* is better organized and has better modulation. You can enable, disable and store different vhost with this directory, 
+ so I recommend you don't follow documentation for this reason.
+ Once you set up your configuration, you need set a symbolic link to /etc/nginx/sites-enabled/ from /etc/nginx/sites-available.
+ 
+`$ apt-get update` 
+always a good idea to keep your packages updated.
+`$ sudo apt-get install certbot` 
+install certbot (Makes certificate management easier).
+`$ apt-get install python3-certbot-nginx` 
+install certbot package for nginx
+
+`$ sudo rm /etc/nginx/sites-enabled/default` 
+remove the default configurator for nginx.
+`$ sudo nano /etc/nginx/sites-available/name_of_your_config_file` 
+create your configuration. I put an example one, but certbot will automatically configure this for you. I do recommend you double-check with
+
+
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    server_name example.com www.example.com;
+}
+```
+`sudo certbot --nginx -d yoursite.com -d www.yoursite.com`
+generate certificates with Nginx plug-in.
+Note: Let's Encrypt certificates expire after 90 days.
+
+4. respond to the prompts from certbot.
+5. Check on your configuration to make sure certbot has changed your configuration.
+`$ cat /etc/nginx/sites-available/name_of_your_config_file`
+if certbot doesn't configure it correctly, here's an example of how it should have generated:
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    server_name  example.com www.example.com;
+
+    listen 443 ssl; # managed by Certbot
+
+    # RSA certificate
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem; # managed by Certbot
+
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+
+    # Redirect non-https traffic to https
+    if ($scheme != "https") {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+}
+```
+And your done! I recommend testing on your domain to see if your API is running on HTTPS.
+If something is missconfigured, I recommend you check out the nginx documentation.
+https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/#auto-renewal
+
+6. Set up PM2. PM2 will keep the node backend running even when you exit your EC2 instance.
+`npm install pm2`
+installs pm2
+`pm2 start index.js`
+run and maintains your node program.
+
+7. Spend some time connecting your client, server so they connect to your domain.
+
+8. dOnE!

@@ -36,7 +36,6 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
         <div className="todo-text" key={todo.id} onClick={() => completeTodo(todo.id)}>
             {todo.text}
             <p className="todo-date">
-              {console.log(todo.date + todo.text)}
               {todo.date.slice(5,7) + "/" + todo.date.slice(8,10) + "/" + todo.date.slice(0,4)+ 
               " - " + todo.date.slice(11,13) + ":" + todo.date.slice(14,16) + ":" + todo.date.slice(17,19) }
             </p>
