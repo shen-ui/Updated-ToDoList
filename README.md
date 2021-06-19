@@ -34,10 +34,10 @@ NOTE: I'm ommitting all problems with Security Groups because they're miniscule 
 2. Looked at options for me to host the DB (i.g. Heroku, AmazonAWS).
 3. Decided on AmazonRDS and EC2. Created a RDS instance, control via MySQL Workbench, import data.json and RDS was established.
 4. Created EC2 Instance (and get completely confused by Security groups and... what? How do I SSH into this? What is EC2 EVEN FOR???)
-5. Spend an entire day figuring out how EC2 relates to RDS. Realize this is where I should be putting my node.js code in my EC2 instance much like how I had client with React and server with Node. **ignore my tangent, log into your EC2 with bash. Commands below:**
+5. Spend an entire day figuring out how EC2 relates to RDS. Realize this is where I should be putting my node.js code in my EC2 instance much like how I had client with React and server with Node. **Ignore my tangent, log into your EC2 with bash. Commands below:**
 
-`chmod 400 ~/.ssh/your-key-name.pem`
-gives reading ownership of the key to the user
+`chmod 400 ~/.ssh/your-key-name.pem`<br />
+gives reading ownership of the key to the user<br />
 `$ ssh -i ~/directory-to-sshkey/whatever-your-key-name-is.pem user@ec2-xx-xxx-xx-xx.eu-west-1.compute.amazonaws.com` <br />
 SSH into EC2 via a key.pem.<br />
 `$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh` <br />
