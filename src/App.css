@@ -4,7 +4,6 @@
   padding: 0;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
-  
 }
 
 body {
@@ -97,7 +96,6 @@ body {
   width: 75%;
 }
 
-
 .todo-row:nth-child(2n + 1) {
   background: rgb(244, 136, 154)
 }
@@ -105,8 +103,6 @@ body {
 .todo-row:nth-child(2n + 2) {
   background: rgb(49, 191, 243)
 }
-
-
 
 .icons {
   display: flex;
@@ -150,4 +146,26 @@ body {
   outline: none;
   background: rgb(244, 136, 154);
   color: black;
+}
+
+@media (min-width: 300px){
+  body{
+    height: auto;
+    width: 92%;
+    overflow-x: hidden !important;
+  }
+  .header{
+    font-size: 10px;
+  }
+  .todo-app{
+    margin: 1em 1em 1em 1em;
+    min-height: 96vh;
+    width: 100%;
+  }
+  .todo-input{
+    width: 80%;
+  }
+  .todo-row{
+    width: 95%;
+  }
 }

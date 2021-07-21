@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-//import data from '../data.json'
+import data from '../data.json'
 // Imported Components
 import Header from './Header'
 import TodoForm from './ToDoForm';
@@ -9,12 +9,13 @@ import Axios from 'axios';
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
-
+    
     useEffect(() => {
         Axios.get(
             'https://www.shenslist.xyz/api/get'
         )
         .then(res => {setTodos(res.data);})
+        setTodos(data);
     }, []);
 
     const submitTodos = (id, input, date) => {

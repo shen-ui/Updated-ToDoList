@@ -5,7 +5,7 @@ const Header = () => {
         
         <header>
             <h1 className="todo-header">
-                Tasks To Do
+                ( Tasks )
             </h1>
         </header>
     )
